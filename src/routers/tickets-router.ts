@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { getTickets } from "@/controllers/tickets-controllers";
+import { getTickets, getUserTicket } from "@/controllers/tickets-controllers";
 
 const ticketsRouter = Router();
 
 ticketsRouter
     .get("/types", getTickets)
-    .get("/",)
+    .get("/", getUserTicket)
     .post("/",);
 
 export { ticketsRouter };

@@ -1,11 +1,18 @@
 import { prisma } from "@/config";
 
 async function allTickets() {
-    return prisma.ticket.findMany()
+    return prisma.ticketType.findMany()
+}
+
+async function userTicket(id: number) {
+    return prisma.ticket.findUnique({
+        where: { id }
+    })
 }
 
 const ticketRepository = {
-    allTickets
+    allTickets,
+    userTicket
 };
 
 export default ticketRepository;
