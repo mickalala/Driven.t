@@ -49,6 +49,6 @@ export async function ticketsPost(req: authUser, res: Response) {
         const newTicket = await ticketService.createTicket(userId, ticketTypeId)
         res.status(httpStatus.CREATED).send(newTicket)
     } catch (error) {
-
+        res.status(500).send(error.message)
     }
 }

@@ -16,14 +16,14 @@ export async function getPaymentTicketInfo(req: authUser, res: Response) {
 
         res.send(paymentInfo);
     } catch (error) {
-
+        res.sendStatus(500)
     }
 }
 
-export async function postPaymentTicket(req: Request, res: Response) {
-    try {
+// export async function postPaymentTicket(req: Request, res: Response) {
+//     try {
 
-    } catch (error) {
+//     } catch (error) {
 
-    }
-}
+//     }
+// }
