@@ -11,14 +11,20 @@ export async function getTickets(req: Request, res: Response) {
     }
 }
 
-export async function getUserTicket(req: Request, res: Response) {
+export interface authUser extends Request {
+    userId: number;
+}
+
+export async function getUserTicket(req: authUser, res: Response) {
+    const userId = req.userId;
     const { ticketTypeId } = req.body
     console.log(ticketTypeId)
-    if (ticketTypeId === undefined || isNaN(ticketTypeId) || ticketTypeId === null || ticketTypeId === "") {
+    if (ticketTypeId === undefined || isNaN(ticketTypeId) || ticketTypeId === null
+        || ticketTypeId === "") {
         return res.sendStatus(400)
     }
     try {
-        const userTicket = await ticketService.getUserTicket(ticketTypeId)
+        const userTicket = await ticketService.getUserTicket(userId)
 
         res.status(httpStatus.OK).send(userTicket)
     } catch (error) {
@@ -31,9 +37,17 @@ export async function getUserTicket(req: Request, res: Response) {
     }
 }
 
-export async function ticketsPost(req: Request, res: Response) {
-    try {
+export async function ticketsPost(req: authUser, res: Response) {
 
+    const userId = req.userId;
+
+    try {
+        const { ticketTypeId } = req.body;
+        if (!ticketTypeId) {
+            return res.status(httpStatus.BAD_REQUEST).send("Unspecified ticket type id.")
+        }
+        const newTicket = await ticketService.createTicket(userId, ticketTypeId)
+        res.status(httpStatus.CREATED).send(newTicket)
     } catch (error) {
 
     }
